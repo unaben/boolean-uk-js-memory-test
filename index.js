@@ -1,28 +1,57 @@
-function randomNumberSelected() {
+// - Show the user 4 random numbers between 1 and 100 using an alert
+// - Ask them to enter the numbers in the right order using a prompt
+// 	- Delay the prompt by 15 seconds (so they have time to forget)
+// - Check how many numbers they entered correctly
+// - Show the user their result
 
-    let randomNumber = [];
-  
-    for (let i = 0; i < 4; i++) {
-      const generatedRandomNumbers = Math.floor(Math.random() * 100);
-      console.log("generatedRandomNumbers: ", generatedRandomNumbers);
-      randomNumber.push(generatedRandomNumbers);
+function compareTwoArraysOfNumbers(randomNumberArray, userInputNumberArray) {
+  let count = 0;
+
+  for (let i = 0; i < randomNumberArray.length; i++) {
+    const randomNumber = randomNumberArray[i];
+    const userInputNumber = userInputNumberArray[i];
+
+    if (randomNumber === userInputNumber) {
+      count += 1;
     }
-    return randomNumber;
   }
+  return count;
+}
 
-  const checkRandomNumber = randomNumberSelected();
-  console.log("checkRandomNumber: ", checkRandomNumber);
+// const result = compareTwoArraysOfNumbers([23, 45, 7, 9, 12], [23, 8, 6, 9, 10]);
+// console.log("RESULT: ", result);
 
-  alert(checkRandomNumber);
+function buildResultMessage(result) {
+  return `Your result: ${result}`;
+}
 
-  const promptOutput = setTimeout(
-    prompt("Enter the numbers in the right order"),
-    15000
-  );
+function getUserInput() {
+  const userResponse = prompt("Enter your random numbers");
+  // const userResponse = "23, 8, 6, 9, 10"
+  const userInputToArray = userResponse.split(",");
 
-  if (checkRandomNumber === promptOutput){
-    alert("Congratulations, you won");
-  } else {
-    alert("You lost, try again");
+  console.log(userInputToArray);
+
+  let userInputArray = [];
+
+  for (let i = 0; i < userInputToArray.length; i++) {
+    const userInput = userInputToArray[i];
+    const userInputToNumbers = Number(userInput);
+
+    console.log(userInputToNumbers);
+    userInputArray.push(userInputToNumbers);
   }
-  
+  return userInputArray;
+}
+// const output = getUserInput()
+// console.log("OUTPUT: ", output);
+
+setTimeout(() => {
+  const userInput = getUserInput();
+
+  const result = compareTwoArraysOfNumbers([23, 45, 7, 9, 12], userInput);
+
+  const resultMessage = buildResultMessage(result);
+
+  alert(resultMessage);
+}, 3000);
